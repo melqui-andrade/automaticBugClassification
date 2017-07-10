@@ -60,13 +60,14 @@ public class Algorithm {
 	private void readBugReport(String path){
 		bugReport = new ArrayList<>();
 		
-		BugReportReader.readCSV(path);
+		BugReportReader.readXML(path);
 	}
 	
 	private void readFSM(String path){
 		fsm = new FSM();
 		
-		FSMReader.readCSV(path);
+		
+		//FSMReader.readXML(path);
 	}
 
 }
