@@ -1,0 +1,13 @@
+package bugClassification;
+
+public enum Classification {
+
+	FAILURE_OF_GUARD,
+	FAILURE_OF_ACTIVITY,
+	FAILURE_OF_STATE,
+	FAILURE_OF_ENTRY,
+	FAILURE_OF_EXIT,
+	FAILURE_OF_FORK,
+	FAILURE_OF_JOIN,
+	FAILURE_OF_CHOICE
+}
