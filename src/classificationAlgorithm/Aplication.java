@@ -4,7 +4,10 @@ public class Aplication {
 
 	public static void main(String[] args) {
 		
-		Algorithm algorithm = new Algorithm(args[0], args[1]);
+		String pathFSM = "./file/fsmcasos.xml";
+		String pathBug = "./file/showbug.xml";
+		
+		Algorithm algorithm = new Algorithm(pathFSM, pathBug);
 		algorithm.searchRelations();
 
 	}

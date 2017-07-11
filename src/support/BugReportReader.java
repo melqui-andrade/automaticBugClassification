@@ -41,6 +41,8 @@ public class BugReportReader {
 				System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					
+					
 
 					Element eElement = (Element) nNode;
 

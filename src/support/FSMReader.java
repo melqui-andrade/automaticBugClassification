@@ -5,6 +5,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -30,7 +31,7 @@ public class FSMReader {
 
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-			NodeList nList = doc.getElementsByTagName("bug");
+			NodeList nList = doc.getElementsByTagName("Behavioral_Elements.State_Machines.CompositeState.subvertex");
 
 			System.out.println("----------------------------");
 
@@ -40,17 +41,50 @@ public class FSMReader {
 
 				System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				if(nNode.hasChildNodes()){
+
+					NodeList childs = nNode.getChildNodes();
+
+					for(int i = 0; i < childs.getLength(); i++){
+
+						Node child = childs.item(i);
+						if(child.getNodeType() == Node.ELEMENT_NODE){
+							if(child.hasAttributes()){
+								if(child.getNodeName() == "Behavioral_Elements.State_Machines.SimpleState"){
+									if(child.hasChildNodes()){
+										for(int j = 0; j < child.getChildNodes().getLength(); j++){
+											Node grandSon = child.getChildNodes().item(j);
+											if(grandSon.getNodeName() == "Foundation.Core.ModelElement.name"){
+												
+												Node name = grandSon.getFirstChild();
+												System.out.println(name.getNodeName());
+												System.out.println(name.getNodeValue());
+											}
+										}
+									}
+									
+								}
+							}
+						}
+					}
+				}
+
+				/*if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 					Element eElement = (Element) nNode;
 
-					System.out.println("Bug id : " + eElement.getAttribute("bug_id"));
-					System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());
-					System.out.println("Product : " + eElement.getElementsByTagName("product").item(0).getTextContent());
-					System.out.println("Reporter : " + eElement.getElementsByTagName("reporter").item(0).getTextContent());
+					eElement.getElementsByTagName("<Behavioral_Elements.State_Machines.SimpleState");
+					if(eElement.getTagName() == "<Behavioral_Elements.State_Machines.SimpleState"){
+
+					}
+
+					System.out.println("Bug id : " + eElement.getAttribute("Foundation.Core.ModelElement.name"));
+					//System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());
+					//System.out.println("Product : " + eElement.getElementsByTagName("product").item(0).getTextContent());
+					//System.out.println("Reporter : " + eElement.getElementsByTagName("reporter").item(0).getTextContent());
 					//System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
 
-				}
+				}*/
 			}
 
 		} catch(Exception e){

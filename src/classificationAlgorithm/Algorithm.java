@@ -17,7 +17,7 @@ public class Algorithm {
 
 	public Algorithm(String pathFSM, String pathBugReport) {
 		
-		readBugReport(pathBugReport);
+		//readBugReport(pathBugReport);
 		readFSM(pathFSM);
 
 	}
@@ -67,7 +67,7 @@ public class Algorithm {
 		fsm = new FSM();
 		
 		
-		//FSMReader.readXML(path);
+		FSMReader.readXML(path);
 	}
 
 }
