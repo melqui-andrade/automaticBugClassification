@@ -2,13 +2,13 @@ package bugClassification;
 
 import java.util.ArrayList;
 
-public class Bug {
+public class BugMatch {
 	
 	private Classification classification;
 	private String scenario;
 	private ArrayList<String> elements;
 	
-	public Bug(Classification classification, String scenario, ArrayList<String> elements){
+	public BugMatch(Classification classification, String scenario, ArrayList<String> elements){
 		this.classification = classification;
 		this.scenario = scenario;
 		this.elements = elements;

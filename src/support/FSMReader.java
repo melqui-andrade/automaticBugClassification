@@ -1,6 +1,10 @@
 package support;
 
 import com.opencsv.CSVReader;
+
+import stateMachine.FSM;
+import stateMachine.State;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
@@ -17,8 +21,9 @@ import java.io.IOException;
 
 public class FSMReader {
 
-	public static Document readXML(String path){
+	public static FSM extractFSMfromXML(String path){
 
+		FSM fsm = new FSM();
 		Document doc = null;
 
 		try{
@@ -57,7 +62,10 @@ public class FSMReader {
 											if(grandSon.getNodeName() == "Foundation.Core.ModelElement.name"){
 												
 												Node name = grandSon.getFirstChild();
-												System.out.println(name.getNodeName());
+												State newState = new State();
+												newState.setName(name.getNodeValue());
+												fsm.addState(newState);
+												//System.out.println(name.getNodeName());
 												System.out.println(name.getNodeValue());
 											}
 										}
@@ -91,7 +99,7 @@ public class FSMReader {
 			e.printStackTrace();
 		}
 
-		return doc;
+		return fsm;
 	}
 
 	public static CSVReader readCSV(String path){

@@ -2,9 +2,12 @@ package support;
 
 import com.opencsv.CSVReader;
 
+import bugClassification.BugReported;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,9 +19,10 @@ import org.w3c.dom.NodeList;
 
 public class BugReportReader {
 
-	public static Document readXML(String path){
+	public static ArrayList<BugReported> extractBugReportFromXML(String path){
 
 		Document doc = null;
+		ArrayList<BugReported> bugReport = new ArrayList<>();
 
 		try{
 			File xmlFile = new File(path);
@@ -45,8 +49,14 @@ public class BugReportReader {
 					
 
 					Element eElement = (Element) nNode;
+					
+					BugReported newBug = new BugReported();
+					newBug.setId(eElement.getElementsByTagName("bug_id").item(0).getTextContent());
+					newBug.setTitle(eElement.getElementsByTagName("short_desc").item(0).getTextContent());
+					
+					bugReport.add(newBug);
 
-					System.out.println("Bug id : " + eElement.getAttribute("bug_id"));
+					System.out.println("Bug id : " + eElement.getElementsByTagName("bug_id"));
 					System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());
 					System.out.println("Product : " + eElement.getElementsByTagName("product").item(0).getTextContent());
 					System.out.println("Reporter : " + eElement.getElementsByTagName("reporter").item(0).getTextContent());
@@ -59,7 +69,7 @@ public class BugReportReader {
 			e.printStackTrace();
 		}
 
-		return doc;
+		return bugReport;
 	}
 
 

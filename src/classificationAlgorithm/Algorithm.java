@@ -2,7 +2,8 @@ package classificationAlgorithm;
 
 import java.util.ArrayList;
 
-import bugClassification.Bug;
+import bugClassification.BugMatch;
+import bugClassification.BugReported;
 import bugClassification.Classification;
 import stateMachine.FSM;
 import stateMachine.State;
@@ -11,13 +12,14 @@ import support.BugReportReader;
 import support.FSMReader;
 
 public class Algorithm {
-	private ArrayList<String> bugReport;
+	private ArrayList<String> listaErrada;
+	private ArrayList<BugReported> bugReport;
 	private FSM fsm;
 	private FinalReport relationsFound;
 
 	public Algorithm(String pathFSM, String pathBugReport) {
 		
-		//readBugReport(pathBugReport);
+		readBugReport(pathBugReport);
 		readFSM(pathFSM);
 
 	}
@@ -25,7 +27,7 @@ public class Algorithm {
 	public FinalReport searchRelations(){
 		FinalReport finalReport = new FinalReport();
 		
-		for(String term : bugReport){
+		for(String term : listaErrada){
 			
 			for(Transition transition : fsm.getTransitions()){
 				handleTransition(term, transition);
@@ -44,7 +46,7 @@ public class Algorithm {
 		
 		ArrayList<String> matches = SearchRelations.matchGuards(term, transition.getGuards());
 		if(!matches.isEmpty()){
-			Bug newBug = new Bug(Classification.FAILURE_OF_GUARD, "Guard failure", matches);
+			BugMatch newBug = new BugMatch(Classification.FAILURE_OF_GUARD, "Guard failure", matches);
 			relationsFound.addBug(newBug);
 			
 		}
@@ -58,16 +60,14 @@ public class Algorithm {
 
 
 	private void readBugReport(String path){
-		bugReport = new ArrayList<>();
+		listaErrada = new ArrayList<>();
 		
-		BugReportReader.readXML(path);
+		bugReport = BugReportReader.extractBugReportFromXML(path);
 	}
 	
 	private void readFSM(String path){
-		fsm = new FSM();
-		
-		
-		FSMReader.readXML(path);
+				
+		fsm = FSMReader.extractFSMfromXML(path);
 	}
 
 }
