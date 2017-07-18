@@ -4,9 +4,12 @@ import com.opencsv.CSVReader;
 
 import bugClassification.BugReported;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,6 +19,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 public class BugReportReader {
 
@@ -25,10 +29,14 @@ public class BugReportReader {
 		ArrayList<BugReported> bugReport = new ArrayList<>();
 
 		try{
-			File xmlFile = new File(path);
+			InputStream inputStream = new FileInputStream(path);
+			Reader reader = new InputStreamReader(inputStream, "UTF-8");
+			InputSource is = new InputSource(reader);
+			is.setEncoding("UTF-8");
+			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			doc = dBuilder.parse(xmlFile);
+			doc = dBuilder.parse(is);
 
 			doc.getDocumentElement().normalize();
 
@@ -60,8 +68,7 @@ public class BugReportReader {
 					System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());
 					System.out.println("Product : " + eElement.getElementsByTagName("product").item(0).getTextContent());
 					System.out.println("Reporter : " + eElement.getElementsByTagName("reporter").item(0).getTextContent());
-					//System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
-
+					
 				}
 			}
 
