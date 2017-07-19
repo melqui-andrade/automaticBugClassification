@@ -4,31 +4,31 @@ import java.util.ArrayList;
 
 public class Transition {
 	
-	private int id;
-	private State source;
-	private State target;
+	private String id;
+	private String sourceID;
+	private String targetID;
 	private String trigger;
 	private ArrayList<String> guards;
 	private ArrayList<String> actions;
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public State getSource() {
-		return source;
+	public String getSource() {
+		return sourceID;
 	}
-	public void setSource(State source) {
-		this.source = source;
+	public void setSourceID(String sourceID) {
+		this.sourceID = sourceID;
 	}
-	public State getTarget() {
-		return target;
+	public String getTargetID() {
+		return targetID;
 	}
-	public void setTarget(State target) {
-		this.target = target;
+	public void setTargetID(String targetID) {
+		this.targetID = targetID;
 	}
 	public String getTrigger() {
 		return trigger;

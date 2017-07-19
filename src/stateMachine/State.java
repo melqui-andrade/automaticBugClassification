@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class State {
 	
-	private int id;
+	private String id;
 	private String name;
 	private ArrayList<String> action;
 	
@@ -12,11 +12,11 @@ public class State {
 		action = new ArrayList<String>();
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

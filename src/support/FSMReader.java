@@ -4,9 +4,11 @@ import com.opencsv.CSVReader;
 
 import stateMachine.FSM;
 import stateMachine.State;
+import stateMachine.Transition;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -25,6 +27,8 @@ public class FSMReader {
 
 		FSM fsm = new FSM();
 		Document doc = null;
+		String stateTag = "Behavioral_Elements.State_Machines.CompositeState.subvertex";
+		String transitionTag = "Behavioral_Elements.State_Machines.Transition";
 
 		try{
 			File xmlFile = new File(path);
@@ -36,13 +40,13 @@ public class FSMReader {
 
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-			NodeList nList = doc.getElementsByTagName("Behavioral_Elements.State_Machines.CompositeState.subvertex");
+			NodeList nListStates = doc.getElementsByTagName(stateTag);
 
 			System.out.println("----------------------------");
 
-			for (int temp = 0; temp < nList.getLength(); temp++) {
+			for (int temp = 0; temp < nListStates.getLength(); temp++) {
 
-				Node nNode = nList.item(temp);
+				Node nNode = nListStates.item(temp);
 
 				System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
@@ -57,42 +61,69 @@ public class FSMReader {
 							if(child.hasAttributes()){
 								if(child.getNodeName() == "Behavioral_Elements.State_Machines.SimpleState"){
 									if(child.hasChildNodes()){
-										for(int j = 0; j < child.getChildNodes().getLength(); j++){
-											Node grandSon = child.getChildNodes().item(j);
-											if(grandSon.getNodeName() == "Foundation.Core.ModelElement.name"){
-												
-												Node name = grandSon.getFirstChild();
-												State newState = new State();
-												newState.setName(name.getNodeValue());
-												fsm.addState(newState);
-												//System.out.println(name.getNodeName());
-												System.out.println(name.getNodeValue());
-											}
+										
+										if(child.getNodeType() == Node.ELEMENT_NODE) {
+											
+											Element element = (Element)child;
+											
+											State state = new State();
+											
+											state.setId(element.getAttribute("xmi.id"));
+											state.setName(element.getElementsByTagName("Foundation.Core.ModelElement.name").
+													item(0).getTextContent());
+											fsm.addState(state);
+											
+											System.out.println(state.getName());
+											
 										}
-									}
-									
+										
+//										for(int j = 0; j < child.getChildNodes().getLength(); j++){
+//											Node grandSon = child.getChildNodes().item(j);
+//											
+//											if(grandSon.getNodeName() == "Foundation.Core.ModelElement.name"){
+//												
+//												Node name = grandSon.getFirstChild();
+//												State newState = new State();
+//												//newState.setId(grandSon.);
+//												newState.setName(name.getNodeValue());
+//												fsm.addState(newState);
+//												//System.out.println(name.getNodeName());
+//												System.out.println(name.getNodeValue());
+//											}
+//										}
+									}									
 								}
 							}
 						}
 					}
-				}
+				}								
+			}
+			
+			NodeList nListTrans = doc.getElementsByTagName(transitionTag);
+			
+			System.out.println("----------------------------");
 
-				/*if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+			for (int temp = 0; temp < nListTrans.getLength(); temp++) {
 
-					Element eElement = (Element) nNode;
+				Node nNode = nListTrans.item(temp);
 
-					eElement.getElementsByTagName("<Behavioral_Elements.State_Machines.SimpleState");
-					if(eElement.getTagName() == "<Behavioral_Elements.State_Machines.SimpleState"){
-
-					}
-
-					System.out.println("Bug id : " + eElement.getAttribute("Foundation.Core.ModelElement.name"));
-					//System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());
-					//System.out.println("Product : " + eElement.getElementsByTagName("product").item(0).getTextContent());
-					//System.out.println("Reporter : " + eElement.getElementsByTagName("reporter").item(0).getTextContent());
-					//System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
-
-				}*/
+				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				
+				if(nNode.getNodeType() == Node.ELEMENT_NODE) {
+					
+					Element element = (Element) nNode;
+					
+					Transition transition = new Transition();
+					transition.setId(element.getAttribute("xmi.id"));
+					
+					NodeList source = element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.source");
+					NodeList target = element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.target");
+					
+					transition.setSourceID(source.item(0).getNodeValue());
+					transition.setTargetID(target.item(0).getNodeValue());
+					
+					fsm.addTransition(transition);
+				}				
 			}
 
 		} catch(Exception e){
