@@ -28,7 +28,7 @@ public class FSMReader {
 		FSM fsm = new FSM();
 		Document doc = null;
 		String stateTag = "Behavioral_Elements.State_Machines.CompositeState.subvertex";
-		String transitionTag = "Behavioral_Elements.State_Machines.Transition";
+		String transitionTag = "Behavioral_Elements.State_Machines.StateMachine.transitions";
 
 		try{
 			File xmlFile = new File(path);
@@ -61,68 +61,86 @@ public class FSMReader {
 							if(child.hasAttributes()){
 								if(child.getNodeName() == "Behavioral_Elements.State_Machines.SimpleState"){
 									if(child.hasChildNodes()){
-										
+
 										if(child.getNodeType() == Node.ELEMENT_NODE) {
-											
+
 											Element element = (Element)child;
-											
+
 											State state = new State();
-											
+
 											state.setId(element.getAttribute("xmi.id"));
 											state.setName(element.getElementsByTagName("Foundation.Core.ModelElement.name").
 													item(0).getTextContent());
 											fsm.addState(state);
-											
+
 											System.out.println(state.getName());
-											
+
 										}
-										
-//										for(int j = 0; j < child.getChildNodes().getLength(); j++){
-//											Node grandSon = child.getChildNodes().item(j);
-//											
-//											if(grandSon.getNodeName() == "Foundation.Core.ModelElement.name"){
-//												
-//												Node name = grandSon.getFirstChild();
-//												State newState = new State();
-//												//newState.setId(grandSon.);
-//												newState.setName(name.getNodeValue());
-//												fsm.addState(newState);
-//												//System.out.println(name.getNodeName());
-//												System.out.println(name.getNodeValue());
-//											}
-//										}
+
+										//										for(int j = 0; j < child.getChildNodes().getLength(); j++){
+										//											Node grandSon = child.getChildNodes().item(j);
+										//											
+										//											if(grandSon.getNodeName() == "Foundation.Core.ModelElement.name"){
+										//												
+										//												Node name = grandSon.getFirstChild();
+										//												State newState = new State();
+										//												//newState.setId(grandSon.);
+										//												newState.setName(name.getNodeValue());
+										//												fsm.addState(newState);
+										//												//System.out.println(name.getNodeName());
+										//												System.out.println(name.getNodeValue());
+										//											}
+										//										}
 									}									
 								}
 							}
 						}
 					}
 				}								
-			}
-			
+			}			
+
 			NodeList nListTrans = doc.getElementsByTagName(transitionTag);
-			
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
 			System.out.println("----------------------------");
+
 
 			for (int temp = 0; temp < nListTrans.getLength(); temp++) {
 
 				Node nNode = nListTrans.item(temp);
 
 				System.out.println("\nCurrent Element :" + nNode.getNodeName());
-				
+
 				if(nNode.getNodeType() == Node.ELEMENT_NODE) {
-					
-					Element element = (Element) nNode;
-					
-					Transition transition = new Transition();
-					transition.setId(element.getAttribute("xmi.id"));
-					
-					NodeList source = element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.source");
-					NodeList target = element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.target");
-					
-					transition.setSourceID(source.item(0).getNodeValue());
-					transition.setTargetID(target.item(0).getNodeValue());
-					
-					fsm.addTransition(transition);
+
+					if(nNode.hasChildNodes()){
+						NodeList childenTrans = nNode.getChildNodes();
+
+						for (int i = 0; i < childenTrans.getLength(); i++) {
+							Node t = childenTrans.item(i);
+							if(t.getNodeName() == "Behavioral_Elements.State_Machines.Transition"){
+
+								if(t.getNodeType() == Node.ELEMENT_NODE) {
+
+									Element element = (Element) t;
+
+									Transition transition = new Transition();
+									transition.setId(element.getAttribute("xmi.id"));
+
+									Element source = (Element) element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.source").item(0);
+									Element target = (Element) element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.target").item(0);
+									
+									
+									transition.setSourceID(source.getAttribute("xmi.idref"));
+									transition.setTargetID(target.getAttribute("xmi.idref"));
+
+									fsm.addTransition(transition);
+								}
+
+							}
+						}
+
+					}					
 				}				
 			}
 
