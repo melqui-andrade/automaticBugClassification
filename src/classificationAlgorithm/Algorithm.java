@@ -11,8 +11,7 @@ import stateMachine.Transition;
 import support.BugReportReader;
 import support.FSMReader;
 
-public class Algorithm {
-	private ArrayList<String> listaErrada;
+public class Algorithm {	
 	private ArrayList<BugReported> bugReport;
 	private FSM fsm;
 	private FinalReport relationsFound;
@@ -27,14 +26,14 @@ public class Algorithm {
 	public FinalReport searchRelations(){
 		FinalReport finalReport = new FinalReport();
 		
-		for(String term : listaErrada){
+		for(BugReported bug : bugReport){
 			
 			for(Transition transition : fsm.getTransitions()){
-				handleTransition(term, transition);
+				handleTransition(bug, transition);
 			}
 			
 			for(State state : fsm.getStates()){
-				handleState(term, state);
+				handleState(bug, state);
 			}
 			
 		}
@@ -42,9 +41,9 @@ public class Algorithm {
 		return finalReport;
 	}
 	
-	private void handleTransition(String term, Transition transition) {
+	private void handleTransition(BugReported bug, Transition transition) {
 		
-		ArrayList<String> matches = SearchRelations.matchGuards(term, transition.getGuards());
+		ArrayList<String> matches = SearchRelations.matchGuards(bug, transition.getGuards());
 		if(!matches.isEmpty()){
 			BugMatch newBug = new BugMatch(Classification.FAILURE_OF_GUARD, "Guard failure", matches);
 			relationsFound.addBug(newBug);
@@ -53,15 +52,14 @@ public class Algorithm {
 		
 	}
 	
-	private void handleState(String term, State state) {
+	private void handleState(BugReported bug, State state) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	private void readBugReport(String path){
-		listaErrada = new ArrayList<>();
-		
+				
 		bugReport = BugReportReader.extractBugReportFromXML(path);
 	}
 	

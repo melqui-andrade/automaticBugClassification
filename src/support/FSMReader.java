@@ -130,9 +130,12 @@ public class FSMReader {
 									Element source = (Element) element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.source").item(0);
 									Element target = (Element) element.getElementsByTagName("Behavioral_Elements.State_Machines.Transition.target").item(0);
 									
+									Element sourceID = (Element) source.getElementsByTagName("Behavioral_Elements.State_Machines.StateVertex").item(0);
+									Element targetID = (Element) target.getElementsByTagName("Behavioral_Elements.State_Machines.StateVertex").item(0);
 									
-									transition.setSourceID(source.getAttribute("xmi.idref"));
-									transition.setTargetID(target.getAttribute("xmi.idref"));
+									
+									transition.setSourceID(sourceID.getAttribute("xmi.idref"));
+									transition.setTargetID(targetID.getAttribute("xmi.idref"));
 
 									fsm.addTransition(transition);
 								}
