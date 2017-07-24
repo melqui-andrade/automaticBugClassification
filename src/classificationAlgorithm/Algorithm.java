@@ -17,7 +17,7 @@ public class Algorithm {
 	private FinalReport relationsFound;
 
 	public Algorithm(String pathFSM, String pathBugReport) {
-		
+		relationsFound = new FinalReport();
 		readBugReport(pathBugReport);
 		readFSM(pathFSM);
 
@@ -53,7 +53,11 @@ public class Algorithm {
 	}
 	
 	private void handleState(BugReported bug, State state) {
-		// TODO Auto-generated method stub
+		ArrayList<String> matches = SearchRelations.matchState(bug, state);
+		if(!matches.isEmpty()) {
+			BugMatch newBug = new BugMatch(Classification.FAILURE_OF_STATE, "Failure of state", matches);
+			relationsFound.addBug(newBug);
+		}
 		
 	}
 

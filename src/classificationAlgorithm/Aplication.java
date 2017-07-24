@@ -8,7 +8,8 @@ public class Aplication {
 		String pathBug = "./file/showbug.xml";
 		
 		Algorithm algorithm = new Algorithm(pathFSM, pathBug);
-		algorithm.searchRelations();
+		FinalReport finalReport = algorithm.searchRelations();
+		finalReport.printReport();
 
 	}
 

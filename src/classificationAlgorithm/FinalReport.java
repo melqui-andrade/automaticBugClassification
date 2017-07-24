@@ -16,5 +16,18 @@ public class FinalReport {
 	public void addBug(BugMatch bug){
 		bugsFound.add(bug);
 	}
+	
+	public void printReport() {
+		System.out.println("Bugs founded: " + bugsFound.size());
+		System.out.println("----------------------------");
+		
+		for(BugMatch bug : bugsFound) {
+			System.out.println(bug.getClassification() + "on: ");
+			for(String element : bug.getElements()) {
+				System.out.println(element);
+			}
+			System.out.println();
+		}
+	}
 
 }
