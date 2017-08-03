@@ -26,6 +26,10 @@ public class Algorithm {
 	public FinalReport searchRelations(){
 		FinalReport finalReport = new FinalReport();
 		
+		for(State state : fsm.getStates()) {
+			
+		}
+		
 		for(BugReported bug : bugReport){
 			
 			for(Transition transition : fsm.getTransitions()){
