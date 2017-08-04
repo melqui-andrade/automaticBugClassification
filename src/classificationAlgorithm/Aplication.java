@@ -9,7 +9,7 @@ public class Aplication {
 		
 		Algorithm algorithm = new Algorithm(pathFSM, pathBug);
 		FinalReport finalReport = algorithm.searchRelations();
-		finalReport.printReport();
+		//finalReport.printReport();
 
 	}
 

@@ -4,7 +4,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="src/opencsv-3.10.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Lucene/lucene-6.5.1/core/lucene-core-6.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Lucene/lucene-6.5.1/queryparser/lucene-queryparser-6.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Lucene/lucene-6.5.1/queryparser/lucene-queryparser-6.5.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Program%20Files/Lucene/lucene-6.5.1/queryparser/docs/xml/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files/Lucene/lucene-6.5.1/analysis/common/lucene-analyzers-common-6.5.1.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Lucene/lucene-6.5.1/demo/lucene-demo-6.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>

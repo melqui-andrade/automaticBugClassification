@@ -40,17 +40,17 @@ public class BugReportReader {
 
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			NodeList nList = doc.getElementsByTagName("bug");
 
-			System.out.println("----------------------------");
+			//System.out.println("----------------------------");
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 
 				Node nNode = nList.item(temp);
 
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				//System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					
@@ -64,10 +64,10 @@ public class BugReportReader {
 					
 					bugReport.add(newBug);
 
-					System.out.println("Bug id : " + eElement.getElementsByTagName("bug_id"));
-					System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());
-					System.out.println("Product : " + eElement.getElementsByTagName("product").item(0).getTextContent());
-					System.out.println("Reporter : " + eElement.getElementsByTagName("reporter").item(0).getTextContent());
+					//System.out.println("Bug id : " + eElement.getElementsByTagName("bug_id"));
+					//System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());
+					//System.out.println("Product : " + eElement.getElementsByTagName("product").item(0).getTextContent());
+					//System.out.println("Reporter : " + eElement.getElementsByTagName("reporter").item(0).getTextContent());
 					
 				}
 			}

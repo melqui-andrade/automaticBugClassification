@@ -38,17 +38,17 @@ public class FSMReader {
 
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			NodeList nListStates = doc.getElementsByTagName(stateTag);
 
-			System.out.println("----------------------------");
+			//System.out.println("----------------------------");
 
 			for (int temp = 0; temp < nListStates.getLength(); temp++) {
 
 				Node nNode = nListStates.item(temp);
 
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				//System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
 				if(nNode.hasChildNodes()){
 
@@ -73,7 +73,7 @@ public class FSMReader {
 													item(0).getTextContent());
 											fsm.addState(state);
 
-											System.out.println(state.getName());
+											//System.out.println(state.getName());
 
 										}
 
@@ -100,16 +100,16 @@ public class FSMReader {
 			}			
 
 			NodeList nListTrans = doc.getElementsByTagName(transitionTag);
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-			System.out.println("----------------------------");
+			//System.out.println("----------------------------");
 
 
 			for (int temp = 0; temp < nListTrans.getLength(); temp++) {
 
 				Node nNode = nListTrans.item(temp);
 
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				//System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
 				if(nNode.getNodeType() == Node.ELEMENT_NODE) {
 

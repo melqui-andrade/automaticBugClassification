@@ -47,7 +47,10 @@ public class SearchRelations {
 
         config = new IndexWriterConfig(analyzer);
         
+        IndexWriter w = new IndexWriter(index, config);
+        
         addDoc(w);
+        w.close();
 	}
 
 	public static ArrayList<String>	matchGuards(BugReported bug, ArrayList<String> guards){
@@ -68,14 +71,8 @@ public class SearchRelations {
 		return matches;
 	}
 
-	public BugMatch matchState(State state) throws IOException, ParseException {
-
+	public BugMatch matchState(State state) throws IOException, ParseException {        
         
-        addDoc(w, "Lucene in Action", "193398817");
-        addDoc(w, "Lucene for Dummies", "55320055Z");
-        addDoc(w, "Managing Gigabytes", "55063554A");
-        addDoc(w, "The Art of Computer Science", "9900333X");
-        w.close();
 
         // 2. query
         String querystr =  state.getName();
@@ -83,6 +80,7 @@ public class SearchRelations {
         // the "title" arg specifies the default field to use
         // when no field is explicitly specified in the query.
         Query q = new QueryParser("title", analyzer).parse(querystr);
+        
 
         // 3. search
         int hitsPerPage = 10;
@@ -92,11 +90,11 @@ public class SearchRelations {
         ScoreDoc[] hits = docs.scoreDocs;
 
         // 4. display results
-        System.out.println("Found " + hits.length + " hits.");
+        System.out.println("Found on State \"" + state.getName() + "\": " + hits.length + " hits.");
         for(int i=0;i<hits.length;++i) {
             int docId = hits[i].doc;
             Document d = searcher.doc(docId);
-            System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title"));
+            System.out.println((i + 1) + ". Bug ID: " + d.get("bug_id") + "\t title: " + d.get("title"));
         }
 
         // reader can only be closed when there
@@ -111,19 +109,11 @@ public class SearchRelations {
 		 for(BugReported bug : bugReport) {
 			 Document doc = new Document();
 			 doc.add(new TextField("title", bug.getTitle(), Field.Store.YES));
-			 doc.add(new TextField("description", bug.getComment(), Field.Store.YES));
+			 //doc.add(new TextField("description", bug.getComment(), Field.Store.YES));
+			 doc.add(new StringField("bug_id", bug.getId(), Field.Store.YES));
 			 w.addDocument(doc);
 		 }
 		
 	}
-	
-	private static void addDoc(IndexWriter w, String title, String isbn) throws IOException {
-        Document doc = new Document();
-        doc.add(new TextField("title", title, Field.Store.YES));
-
-        // use a string field for isbn because we don't want it tokenized
-        doc.add(new StringField("isbn", isbn, Field.Store.YES));
-        w.addDocument(doc);
-    }
 
 }

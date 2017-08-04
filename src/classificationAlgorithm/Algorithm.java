@@ -1,6 +1,9 @@
 package classificationAlgorithm;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.apache.lucene.queryparser.classic.ParseException;
 
 import bugClassification.BugMatch;
 import bugClassification.BugReported;
@@ -25,10 +28,21 @@ public class Algorithm {
 	
 	public FinalReport searchRelations(){
 		FinalReport finalReport = new FinalReport();
-		
-		for(State state : fsm.getStates()) {
+		try {
 			
+			SearchRelations searcher = new SearchRelations(bugReport);
+			for(State state : fsm.getStates()) {
+				searcher.matchState(state);
+			}
+			
+		} catch (IOException | ParseException e) {
+			
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Oh my....");
+			e.printStackTrace();
 		}
+		
 		
 		for(BugReported bug : bugReport){
 			
