@@ -31,6 +31,7 @@ public class Algorithm {
 		try {
 			
 			SearchRelations searcher = new SearchRelations(bugReport);
+			System.out.println(bugReport.size() + " bugs analysed");
 			for(State state : fsm.getStates()) {
 				searcher.matchState(state);
 			}
