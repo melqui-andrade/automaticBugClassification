@@ -18,66 +18,36 @@ public class Algorithm {
 	private ArrayList<BugReported> bugReport;
 	private FSM fsm;
 	private FinalReport relationsFound;
+	private SearchRelations searcher;
 
 	public Algorithm(String pathFSM, String pathBugReport) {
 		relationsFound = new FinalReport();
 		readBugReport(pathBugReport);
 		readFSM(pathFSM);
 
+
+		try {
+			searcher = new SearchRelations(fsm);
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	public FinalReport searchRelations(){
 		FinalReport finalReport = new FinalReport();
-		try {
-			
-			SearchRelations searcher = new SearchRelations(bugReport);
-			System.out.println(bugReport.size() + " bugs analysed");
-			for(State state : fsm.getStates()) {
-				searcher.matchState(state);
-			}
-			
-		} catch (IOException | ParseException e) {
-			
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.err.println("Oh my....");
-			e.printStackTrace();
-		}
-		
 		
 		for(BugReported bug : bugReport){
-			
-			for(Transition transition : fsm.getTransitions()){
-				handleTransition(bug, transition);
-			}
-			
-			for(State state : fsm.getStates()){
-				handleState(bug, state);
-			}
-			
+			findMatches(bug);
+			System.out.println("\t\t---------------");
 		}
 		
 		return finalReport;
 	}
 	
-	private void handleTransition(BugReported bug, Transition transition) {
-		
-		ArrayList<String> matches = SearchRelations.matchGuards(bug, transition.getGuards());
-		if(!matches.isEmpty()){
-			BugMatch newBug = new BugMatch(Classification.FAILURE_OF_GUARD, "Guard failure", matches);
-			relationsFound.addBug(newBug);
-			
-		}
-		
-	}
-	
-	private void handleState(BugReported bug, State state) {
-		ArrayList<String> matches = SearchRelations.matchState(bug, state);
-		if(!matches.isEmpty()) {
-			BugMatch newBug = new BugMatch(Classification.FAILURE_OF_STATE, "Failure of state", matches);
-			relationsFound.addBug(newBug);
-		}
-		
+	private void findMatches(BugReported bug) {
+		ArrayList<String> matches = searcher.matchState(bug);
 	}
 
 
