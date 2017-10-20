@@ -27,7 +27,7 @@ public class FSMReader {
 
 		FSM fsm = new FSM();
 		Document doc = null;
-		String stateTag = "Behavioral_Elements.State_Machines.CompositeState.subvertex";
+		String stateTag = "UML:CompositeState.substate";
 		String transitionTag = "Behavioral_Elements.State_Machines.StateMachine.transitions";
 
 		try{
@@ -38,11 +38,11 @@ public class FSMReader {
 
 			doc.getDocumentElement().normalize();
 
-			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			NodeList nListStates = doc.getElementsByTagName(stateTag);
 
-			//System.out.println("----------------------------");
+			System.out.println("----------------------------");
 
 			for (int temp = 0; temp < nListStates.getLength(); temp++) {
 
@@ -59,7 +59,7 @@ public class FSMReader {
 						Node child = childs.item(i);
 						if(child.getNodeType() == Node.ELEMENT_NODE){
 							if(child.hasAttributes()){
-								if(child.getNodeName() == "Behavioral_Elements.State_Machines.SimpleState"){
+								if(child.getNodeName() == "UML:SimpleState"){
 									if(child.hasChildNodes()){
 
 										if(child.getNodeType() == Node.ELEMENT_NODE) {
@@ -69,11 +69,10 @@ public class FSMReader {
 											State state = new State();
 
 											state.setId(element.getAttribute("xmi.id"));
-											state.setName(element.getElementsByTagName("Foundation.Core.ModelElement.name").
-													item(0).getTextContent());
+											state.setName(element.getAttribute("name"));
 											fsm.addState(state);
 
-											//System.out.println(state.getName());
+											System.out.println(state.getName());
 
 										}
 
