@@ -38,11 +38,11 @@ public class FSMReader {
 
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			NodeList nListStates = doc.getElementsByTagName(stateTag);
 
-			System.out.println("----------------------------");
+			//System.out.println("----------------------------");
 
 			for (int temp = 0; temp < nListStates.getLength(); temp++) {
 
@@ -72,7 +72,7 @@ public class FSMReader {
 											state.setName(element.getAttribute("name"));
 											fsm.addState(state);
 
-											System.out.println(state.getName());
+											//System.out.println(state.getName());
 
 										}
 

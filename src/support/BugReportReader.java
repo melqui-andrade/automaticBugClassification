@@ -28,7 +28,7 @@ public class BugReportReader {
 		Document doc = null;
 		ArrayList<BugReported> bugReport = new ArrayList<>();
 
-		try{
+		try{			
 			InputStream inputStream = new FileInputStream(path);
 			Reader reader = new InputStreamReader(inputStream, "UTF-8");
 			InputSource is = new InputSource(reader);
@@ -54,15 +54,19 @@ public class BugReportReader {
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					
-					
-
 					Element eElement = (Element) nNode;
+					String resolution = eElement.getElementsByTagName("resolution").item(0).getTextContent();
+					String status = eElement.getElementsByTagName("bug_status").item(0).getTextContent();
 					
-					BugReported newBug = new BugReported();
-					newBug.setId(eElement.getElementsByTagName("bug_id").item(0).getTextContent());
-					newBug.setTitle(eElement.getElementsByTagName("short_desc").item(0).getTextContent());
-					
-					bugReport.add(newBug);
+					if(!resolution.equals("INVALID") && 
+							!resolution.equals("DUPLICATE") && !status.equals("REJECTED")) {
+						
+						BugReported newBug = new BugReported();
+						newBug.setId(eElement.getElementsByTagName("bug_id").item(0).getTextContent());
+						newBug.setTitle(eElement.getElementsByTagName("short_desc").item(0).getTextContent());
+						
+						bugReport.add(newBug);
+					}
 
 					//System.out.println("Bug id : " + eElement.getElementsByTagName("bug_id"));
 					//System.out.println("Short desc : " + eElement.getElementsByTagName("short_desc").item(0).getTextContent());

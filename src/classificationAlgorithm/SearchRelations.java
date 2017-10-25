@@ -83,7 +83,7 @@ public class SearchRelations {
         
 
         // 3. search
-        int hitsPerPage = 10;
+        int hitsPerPage = 5;
         IndexReader reader = DirectoryReader.open(index);
         IndexSearcher searcher = new IndexSearcher(reader);
         TopDocs docs = searcher.search(q, hitsPerPage);
