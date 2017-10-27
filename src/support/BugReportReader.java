@@ -56,14 +56,16 @@ public class BugReportReader {
 					
 					Element eElement = (Element) nNode;
 					String resolution = eElement.getElementsByTagName("resolution").item(0).getTextContent();
+					String severity = eElement.getElementsByTagName("bug_severity").item(0).getTextContent();
 					String status = eElement.getElementsByTagName("bug_status").item(0).getTextContent();
 					
 					if(!resolution.equals("INVALID") && 
-							!resolution.equals("DUPLICATE") && !status.equals("REJECTED")) {
+							!resolution.equals("DUPLICATE") && !status.equals("REJECTED") && !severity.equals("melhoria")) {
 						
 						BugReported newBug = new BugReported();
 						newBug.setId(eElement.getElementsByTagName("bug_id").item(0).getTextContent());
 						newBug.setTitle(eElement.getElementsByTagName("short_desc").item(0).getTextContent());
+						newBug.setSeveridade(eElement.getElementsByTagName("bug_severity").item(0).getTextContent());
 						
 						bugReport.add(newBug);
 					}

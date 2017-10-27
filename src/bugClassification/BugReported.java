@@ -5,6 +5,7 @@ public class BugReported {
 	private String id;
 	private String title;
 	private String comment;
+	private String severity;
 	public String getId() {
 		return id;
 	}
@@ -22,6 +23,12 @@ public class BugReported {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public void setSeveridade(String severidade) {
+		this.severity = severidade;
+	}
+	public String getSeverity() {
+		return severity;
 	}
 	
 	

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import bugClassification.BugMatch;
 import bugClassification.BugReported;
+import bugClassification.Classification;
 import stateMachine.State;
+import support.Printer;
 
 import java.io.IOException;
 
@@ -94,8 +96,13 @@ public class SearchRelations {
         for(int i=0;i<hits.length;++i) {
             int docId = hits[i].doc;
             Document d = searcher.doc(docId);
-            System.out.println((i + 1) + ". Bug ID: " + d.get("bug_id") + "\t title: " + d.get("title"));
+            System.out.println((i + 1) + ". Bug ID: " + d.get("bug_id") + "\t title: " + d.get("title") +
+            		"\t Severity: " + d.get("severity"));  
+            
         }
+        System.out.println("");
+        
+        //Printer.printDoc2File(hits, searcher);
 
         // reader can only be closed when there
         // is no need to access the documents any more.
@@ -111,6 +118,7 @@ public class SearchRelations {
 			 doc.add(new TextField("title", bug.getTitle(), Field.Store.YES));
 			 //doc.add(new TextField("description", bug.getComment(), Field.Store.YES));
 			 doc.add(new StringField("bug_id", bug.getId(), Field.Store.YES));
+			 doc.add(new StringField("severity", bug.getSeverity(), Field.Store.YES));
 			 w.addDocument(doc);
 		 }
 		

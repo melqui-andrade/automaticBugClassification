@@ -1,0 +1,5 @@
+1. Bug ID: 1291	 title: Notícia Crime não pode ser modificado de Aguardando Distribuição para Aguardando Autuação	 Severity: bloqueante
+2. Bug ID: 1323	 title: Notícia Crime não pode ser modificado de Aguardando Distribuição para Aguardando Manifestação	 Severity: bloqueante
+3. Bug ID: 1758	 title: Distribuição bloqueada - caso 2017.0001244	 Severity: bloqueante
+4. Bug ID: 96	 title: Problema na distribuição de caso	 Severity: normal
+5. Bug ID: 449	 title: Registrar fundamentação da distribuição/redistribuição	 Severity: melhoria
